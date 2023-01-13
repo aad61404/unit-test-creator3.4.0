@@ -1,0 +1,19 @@
+{
+  "name": "unit-test-creator3.4.0",
+  "uuid": "409072a0-78d4-420f-819d-f87942454568",
+  "version": "3.4.0",
+  "creator": {
+    "version": "3.4.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.6",
+    "@types/uuid": "^8.3.4",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^29.3.1",
+    "ts-jest": "^28.0.7",
+    "typescript": "^4.7.4"
+  }
+}
