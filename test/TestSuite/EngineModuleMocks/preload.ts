@@ -7,10 +7,10 @@ declare global {
     }
 }
 
-const require = createRequire(import.meta.url);
+const requireMeta = createRequire(import.meta.url);
 
 const loader: {
     ['import'](id: 'cc'): Promise<typeof import('cc')>;
-} = require(ps.join(globalThis.ENGINE_LOCATION, 'bin', '.cache', 'dev', 'editor', 'loader.js')).default;
+} = requireMeta(ps.join(globalThis.ENGINE_LOCATION, 'bin', '.cache', 'dev', 'editor', 'loader.js')).default;
 
 export { loader };

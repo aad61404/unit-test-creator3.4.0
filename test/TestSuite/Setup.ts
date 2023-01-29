@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 
 const modules: Record<string, unknown> = {};
 
-await (async () => {
+(async () => {
     await new Promise((resolve) => {
         setTimeout(resolve, 3000);
     });
