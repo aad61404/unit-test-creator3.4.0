@@ -1,19 +1,27 @@
 module.exports = {
-    preset: "ts-jest",         // 如果是 js 工程，则是 "jest" 
-    testEnvironment: 'node',   // 测试代码所运行的环境
-    rootDir: './',         // 测试文件所在的目录
-    // verbose: true,          // 是否需要在测试时输出详细的测试情况
-    // rootDir: "./test",         // 测试文件所在的目录
-    globals: {                 // 全局属性。如果你的被测试的代码中有使用、定义全局变量，那你应该在这里定义全局属性
-      window: {},
-      cc: {}
-    },
-    moduleDirectories: ['<rootDir>', 'node_modules'],
-    modulePaths: ['<rootDir>',],
-    moduleFileExtensions: ['ts','js', 'test.ts', 'json','node' ],
-    moduleNameMapper: {
-      "^db://(.*)" : ['<rootDir>/$1'],
-      "cc": ['<rootDir>/test/engine/bin/.declarations/cc.d.ts']
-    },
-  };
-  
+  preset: 'ts-jest/presets/default-esm', // 重要
+  rootDir: './',         // 测试文件所在的目录
+  testEnvironment: 'jsdom', // 需要；因为目前引擎依赖一点 DOM 环境
+  testRegex: [String.raw`test[\/\\].*\.(test)?\.(ts|tsx)$`], // 这个路径看你自己的安排
+  setupFiles: [
+      './test/TestSuite/Setup.ts', // 需要在这里做一些事情，见下
+  ],
+  moduleFileExtensions: ['ts', 'js', 'json', 'node', 'jsx'],
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+      CC_DEV: true,
+      CC_TEST: true,
+      ENGINE_LOCATION: String.raw`C:\\CocosDashboard_1.2.3\\resources\\.editors\\Creator\\3.4.0\\resources\\resources\\3d\\engine`, // 替换成你引擎的位置
+      'ts-jest': {
+          useESM: true, // 重要
+          tsconfig: 'tsconfig.json', // 这个可选了，看你安排
+          /* Fails on mapped import syntax without this.*/
+          diagnostics: false,
+      },
+  },
+  moduleNameMapper: {
+      '^cc$': '<rootDir>/test/TestSuite/EngineModuleMocks/cc.ts', // 重要，文件内容见下
+      '^cc/env$': '<rootDir>/test/TestSuite/EngineModuleMocks/cc/env.ts', // 重要，文件内容见下
+      '^(\\.{1,2}/.*)\\.js$': '$1', // 重要，见 https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
+  },
+};
